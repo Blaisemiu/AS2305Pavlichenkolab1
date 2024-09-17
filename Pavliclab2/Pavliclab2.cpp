@@ -13,3 +13,26 @@ struct Pipe
 	bool sing;
 };
 
+Pipe Createdpipe()
+{
+	Pipe p;
+	cout << "Write the name of the pipe: ";
+	cin >> p.name;
+
+	cout << "Write the length of the pipe: ";
+	cin >> p.length;
+
+	cout << "Write the diameter of the pipe: ";
+	cin >> p.diameter;
+
+	cout << "Write the sing of the pipe: ";
+	cin >> p.sing;
+	return p;
+};
+
+int main()
+{
+	int x = 0;
+	Pipe pp = Createdpipe();
+	return x;
+}
