@@ -10,29 +10,55 @@ struct Pipe
 	string name;
 	int length;
 	int diameter;
-	bool sing;
+	bool state;
 };
 
-Pipe Createdpipe()
+void Correct();
+
+Pipe Createpipe()
 {
 	Pipe p;
 	cout << "Write the name of the pipe: ";
 	cin >> p.name;
 
 	cout << "Write the length of the pipe: ";
-	cin >> p.length;
+
+	while (!(cin >> p.length))
+	{
+		Correct();
+	}
 
 	cout << "Write the diameter of the pipe: ";
-	cin >> p.diameter;
+	while (!(cin >> p.diameter))
+	{
+		Correct();
+	}
 
 	cout << "Write the sing of the pipe: ";
-	cin >> p.sing;
+	while (!(cin >> p.state))
+	{
+		Correct();
+	}
 	return p;
 };
+
+void Outputpipe(Pipe p)
+{
+
+	cout << "Pipe's name: " << p.name;
+}
+
+void Correct()
+{
+	cin.clear();
+	cin.ignore();
+	cout << "Enter correct information: ";
+}
 
 int main()
 {
 	int x = 0;
-	Pipe pp = Createdpipe();
+	Pipe pp = Createpipe();
+	Outputpipe(pp);
 	return x;
 }
