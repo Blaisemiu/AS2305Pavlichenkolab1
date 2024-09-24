@@ -47,7 +47,10 @@ Pipe Createpipe()
 
 void Outputpipe(Pipe p)
 {
-	cout << "Pipe's name: " << p.name;
+	cout << "Pipe's name: " << p.name << endl;
+	cout << "Pipe's length: " << p.length << endl;
+	cout << "Pipe's diameter: " << p.diameter << endl;
+	cout << "Pipe's state: " << (p.state ? "Under repair\n" : "In progress\n");
 }
 
 void Correction()
