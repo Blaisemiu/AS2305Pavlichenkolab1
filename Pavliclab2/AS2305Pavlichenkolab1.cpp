@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -13,45 +14,46 @@ struct Pipe
 	bool state;
 };
 
-void Correct();
+void Correction();
 
 Pipe Createpipe()
 {
 	Pipe p;
 	cout << "Write the name of the pipe: ";
-	cin >> p.name;
+	cin >> ws;
+	getline(cin,p.name);
 
 	cout << "Write the length of the pipe: ";
 
-	while (!(cin >> p.length))
+	while (!(cin >> p.length) || p.length <= 0)
 	{
-		Correct();
+		Correction();
 	}
 
 	cout << "Write the diameter of the pipe: ";
-	while (!(cin >> p.diameter))
+	while (!(cin >> p.diameter) || p.diameter <= 0)
 	{
-		Correct();
+		Correction();
 	}
 
-	cout << "Write the sing of the pipe: ";
+	cout << "Is the pipe being repaired? (Yes - 1, No - 0): ";
 	while (!(cin >> p.state))
 	{
-		Correct();
+		Correction();
 	}
+	cout << "\n";
 	return p;
 };
 
 void Outputpipe(Pipe p)
 {
-
 	cout << "Pipe's name: " << p.name;
 }
 
-void Correct()
+void Correction()
 {
 	cin.clear();
-	cin.ignore();
+	cin.ignore(10000, '\n');
 	cout << "Enter correct information: ";
 }
 
