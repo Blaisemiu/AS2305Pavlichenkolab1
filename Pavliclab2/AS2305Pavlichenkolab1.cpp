@@ -58,7 +58,29 @@ void Outputpipe(Pipe p)
 	cout << "Pipe's name: " << p.name << endl;
 	cout << "Pipe's length: " << p.length << endl;
 	cout << "Pipe's diameter: " << p.diameter << endl;
-	cout << "Pipe's state: " << (p.state ? "Under repair\n" : "In progress\n");
+	cout << "Pipe's state: " << (p.state ? "Under repair" : "In progress") << endl;
+}
+
+void Editpipestate(Pipe& p)
+{
+	cout << "Current pipe state: " << (p.state ? "Under repair" : "In progress") << endl;
+	cout << "Do you want to change the condition of the pipe? (Yes - 1, No - 0): ";
+	bool newstate;
+	while (!(cin >> newstate))
+	{
+		Correction();
+	}
+
+	if (newstate == 1)
+	{
+		p.state = !p.state;
+		cout << "Pipe state changed";
+	}
+	else
+	{
+		cout << "The state of the pipe hasn't changed";
+	}
+	
 }
 
 void Correction()
@@ -73,5 +95,6 @@ int main()
 	int x = 0;
 	Pipe pp = Createpipe();
 	Outputpipe(pp);
+	Editpipestate(pp);
 	return x;
 }
