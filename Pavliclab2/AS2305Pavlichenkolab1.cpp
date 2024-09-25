@@ -14,6 +14,14 @@ struct Pipe
 	bool state;
 };
 
+struct CS
+{
+	string csname;
+	int numberworkshop;
+	int stateworkshop;
+	int efficiency;
+};
+
 void Correction();
 
 Pipe Createpipe()
