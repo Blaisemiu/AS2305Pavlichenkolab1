@@ -59,6 +59,7 @@ void Outputpipe(Pipe p)
 	cout << "Pipe's length: " << p.length << endl;
 	cout << "Pipe's diameter: " << p.diameter << endl;
 	cout << "Pipe's state: " << (p.state ? "Under repair" : "In progress") << endl;
+	cout << "\n";
 }
 
 void Editpipestate(Pipe& p)
@@ -83,10 +84,10 @@ void Editpipestate(Pipe& p)
 	cout << "\n";
 }
 
-void CreateCS()
+CS CreateCS()
 {
 	CS s;
-	cout << "Write the name pf the compressor station: ";
+	cout << "Write the name of the compressor station: ";
 	cin >> ws;
 	getline(cin, s.csname);
 
@@ -97,7 +98,7 @@ void CreateCS()
 	}
 
 	cout << "Write the number of workshops in operation: ";
-	while (!(cin >> s.numberworkshopinoperation))
+	while (!(cin >> s.numberworkshopinoperation) || s.numberworkshopinoperation > s.numberworkshop)
 	{
 		Correction();
 	}
@@ -108,9 +109,50 @@ void CreateCS()
 		Correction();
 	}
 	cout << "\n";
+	return s;
 }
 
+void OutputCS(CS s)
+{
+	cout << "Compressor Station's name: " << s.csname << endl;
+	cout << "Number of workshop : " << s.numberworkshop << endl;
+	cout << "Number of workshop in operation: " << s.numberworkshopinoperation << endl;
+	cout << "The effeciency of the station: " << s.efficiency << endl;
+	cout << "\n";
+}
 
+void Changingworkshopsinoperation(CS& s)
+{
+	cout << "Number of workshop in operation: " << s.numberworkshop << endl;
+	cout << "Do you want to start or stop the workshop? (1 - start, 0 - stop): ";
+	bool choice;
+	int numberofchages;
+	while (!(cin >> choice))
+	{
+		Correction();
+	}
+	if (choice == 1)
+	{
+		cout << "Write how many workshops to start: ";
+		while (!(cin >> numberofchages) || (s.numberworkshopinoperation + numberofchages) > s.numberworkshop || numberofchages < 0)
+		{
+			Correction();
+		}
+		s.numberworkshopinoperation += numberofchages;
+	}
+	else
+	{
+		cout << "Write how many workshops to stop: ";
+		while (!(cin >> numberofchages) || (s.numberworkshopinoperation - numberofchages) < 0 || numberofchages < 0)
+		{
+			Correction();
+		}
+		s.numberworkshopinoperation -= numberofchages;
+	}
+
+	cout << "Number of workshop in operation: " << s.numberworkshopinoperation << endl;
+
+}
 
 void Correction()
 {
@@ -123,7 +165,11 @@ int main()
 {
 	int x = 0;
 	Pipe pp = Createpipe();
+	CS ss = CreateCS();
 	Outputpipe(pp);
+	OutputCS(ss);
 	Editpipestate(pp);
+	Changingworkshopsinoperation(ss);
+
 	return x;
 }
