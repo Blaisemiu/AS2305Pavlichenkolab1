@@ -18,7 +18,7 @@ struct CS
 {
 	string csname;
 	int numberworkshop;
-	int stateworkshop;
+	int numberworkshopinoperation;
 	int efficiency;
 };
 
@@ -80,8 +80,37 @@ void Editpipestate(Pipe& p)
 	{
 		cout << "The state of the pipe hasn't changed";
 	}
-	
+	cout << "\n";
 }
+
+void CreateCS()
+{
+	CS s;
+	cout << "Write the name pf the compressor station: ";
+	cin >> ws;
+	getline(cin, s.csname);
+
+	cout << "Write the number of workshops: ";
+	while (!(cin >> s.numberworkshop))
+	{
+		Correction();
+	}
+
+	cout << "Write the number of workshops in operation: ";
+	while (!(cin >> s.numberworkshopinoperation))
+	{
+		Correction();
+	}
+
+	cout << "Write the efficiency of the station (from 0 to 1000): ";
+	while (!(cin >> s.efficiency) || s.efficiency < 0 || s.efficiency > 1000)
+	{
+		Correction();
+	}
+	cout << "\n";
+}
+
+
 
 void Correction()
 {
