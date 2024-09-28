@@ -24,6 +24,8 @@ struct CS
 
 void Correction();
 
+
+
 Pipe Createpipe()
 {
 	Pipe p;
@@ -64,23 +66,9 @@ void Outputpipe(Pipe p)
 
 void Editpipestate(Pipe& p)
 {
-	cout << "Current pipe state: " << (p.state ? "Under repair" : "In progress") << endl;
-	cout << "Do you want to change the condition of the pipe? (Yes - 1, No - 0): ";
-	bool newstate;
-	while (!(cin >> newstate))
-	{
-		Correction();
-	}
-
-	if (newstate == 1)
-	{
-		p.state = !p.state;
-		cout << "Pipe state changed";
-	}
-	else
-	{
-		cout << "The state of the pipe hasn't changed";
-	}
+	p.state = !p.state;
+	cout << "Pipe state changed" << endl
+		<< "New pipe state: " << (p.state ? "Under repair" : "In progress");
 	cout << "\n";
 }
 
@@ -151,7 +139,19 @@ void Changingworkshopsinoperation(CS& s)
 	}
 
 	cout << "Number of workshop in operation: " << s.numberworkshopinoperation << endl;
+}
 
+void Menu()
+{
+	cout << "1.Add pipe\n"
+		<< "2.Add compressor station\n"
+		<< "3.Viev all objects\n"
+		<< "4.Edit pipe state\n"
+		<< "5.Edit the number of working workshops\n"
+		<< "6.Save data to file\n"
+		<< "7.Load data to file\n"
+		<< "8.Exit\n"
+		<< "Enter menu number: ";
 }
 
 void Correction()
@@ -163,13 +163,36 @@ void Correction()
 
 int main()
 {
-	int x = 0;
-	Pipe pp = Createpipe();
-	CS ss = CreateCS();
-	Outputpipe(pp);
-	OutputCS(ss);
-	Editpipestate(pp);
-	Changingworkshopsinoperation(ss);
+	int number;
+	Pipe pipe;
+	CS cs;
 
-	return x;
+	do
+	{
+		Menu();
+		cin >> number;
+		switch (number)
+		{
+		case 1:
+			pipe = Createpipe();
+			break;
+		case 2:
+			cs = CreateCS();
+			break;
+		case 3:
+			Outputpipe(pipe);
+			OutputCS(cs);
+			break;
+		case 4:
+			Editpipestate(pipe);
+			break;
+		case 5:
+			Changingworkshopsinoperation(cs);
+			break;
+		}
+
+	} while (number != 8);
+	{
+		return 0;
+	}
 }
