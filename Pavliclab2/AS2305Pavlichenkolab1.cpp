@@ -26,7 +26,6 @@ struct CS
 void Correction();
 
 
-
 Pipe CreatePipe()
 {
 	Pipe p;
@@ -150,26 +149,56 @@ void Menu()
 		<< "4.Viev compressor stetion\n"
 		<< "5.Edit pipe state\n"
 		<< "6.Edit the number of working workshops\n"
-		<< "7.Save data to file\n"
-		<< "8.Load data to file\n"
-		<< "9.Exit\n"
+		<< "7.Save Pipe to file\n"
+		<< "8.Save Compressor station to file\n"
+		<< "9.Load Pipe from file\n"
+		<< "10.Load Comperssor station from file\n"
+		<< "11.Exit\n"
 		<< "Enter menu number: ";
 }
 
-void SaveData(fstream& fout, const Pipe& p, const CS& s)
+void SaveDataPipe(ofstream& fout, const Pipe& p)
 {
+
 	fout << p.name << endl;
 	fout << p.length << endl;
 	fout << p.diameter << endl;
 	fout << p.state << endl;
 
+}
+
+void SaveDataCS(ofstream& fout, const CS& s)
+{
+
 	fout << s.csname << endl;
 	fout << s.numberworkshop << endl;
 	fout << s.numberworkshopinoperation << endl;
 	fout << s.efficiency << endl;
+
 }
 
+void LoadDataPipe(ifstream& fin, Pipe& p)
+{	
 
+	fin >> p.name;
+	fin >> p.length;
+	fin >> p.diameter;
+	fin >> p.state;
+
+	fin.close();
+}
+
+void LoadDataCS(ifstream& fin,CS& s)
+{
+
+
+	fin >> s.csname;
+	fin >> s.numberworkshop;
+	fin >> s.numberworkshopinoperation;
+	fin >> s.efficiency;
+
+
+}
 
 void Correction()
 {
@@ -181,8 +210,9 @@ void Correction()
 int main()
 {
 	int number;
-	Pipe pipe;
-	CS cs;
+	Pipe pipe = { "None", 0, 0, 0};
+	CS cs = { "None", 0, 0, 0};
+	
 
 	do
 	{
@@ -208,9 +238,33 @@ int main()
 		case 6:
 			ChangingWorkshopsInOperation(cs);
 			break;
+		case 7:
+		{
+			ofstream fout("data.txt");
+			if (fout.is_open())
+			{
+				SaveDataPipe(fout, pipe);
+				fout.close();
+				cout << "Pipe data saved to file" << endl;
+			}
+			else
+				cout << "Error! Failed to write data to file" << endl;
+		}
+		case 8:
+		{
+			ofstream fout("data.txt");
+			if (fout.is_open())
+			{
+				SaveDataCS(fout, cs);
+				fout.close();
+				cout << "Compressor station data saved to file" << endl;
+			}
+			else
+				cout << "Error! Failed to write data to file" << endl;
+		}
 		}
 
-	} while (number != 9);
+	} while (number != 11);
 	{
 		return 0;
 	}
