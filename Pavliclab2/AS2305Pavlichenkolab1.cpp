@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -26,7 +27,7 @@ void Correction();
 
 
 
-Pipe Createpipe()
+Pipe CreatePipe()
 {
 	Pipe p;
 	cout << "Write the name of the pipe: ";
@@ -55,7 +56,7 @@ Pipe Createpipe()
 	return p;
 };
 
-void Outputpipe(Pipe p)
+void OutputPipe(Pipe p)
 {
 	cout << "Pipe's name: " << p.name << endl;
 	cout << "Pipe's length: " << p.length << endl;
@@ -64,7 +65,7 @@ void Outputpipe(Pipe p)
 	cout << "\n";
 }
 
-void Editpipestate(Pipe& p)
+void EditPipeState(Pipe& p)
 {
 	p.state = !p.state;
 	cout << "Pipe state changed" << endl
@@ -109,7 +110,7 @@ void OutputCS(CS s)
 	cout << "\n";
 }
 
-void Changingworkshopsinoperation(CS& s)
+void ChangingWorkshopsInOperation(CS& s)
 {
 	cout << "Number of workshop in operation: " << s.numberworkshop << endl;
 	cout << "Do you want to start or stop the workshop? (1 - start, 0 - stop): ";
@@ -145,14 +146,30 @@ void Menu()
 {
 	cout << "1.Add pipe\n"
 		<< "2.Add compressor station\n"
-		<< "3.Viev all objects\n"
-		<< "4.Edit pipe state\n"
-		<< "5.Edit the number of working workshops\n"
-		<< "6.Save data to file\n"
-		<< "7.Load data to file\n"
-		<< "8.Exit\n"
+		<< "3.Viev pipe\n"
+		<< "4.Viev compressor stetion\n"
+		<< "5.Edit pipe state\n"
+		<< "6.Edit the number of working workshops\n"
+		<< "7.Save data to file\n"
+		<< "8.Load data to file\n"
+		<< "9.Exit\n"
 		<< "Enter menu number: ";
 }
+
+void SaveData(fstream& fout, const Pipe& p, const CS& s)
+{
+	fout << p.name << endl;
+	fout << p.length << endl;
+	fout << p.diameter << endl;
+	fout << p.state << endl;
+
+	fout << s.csname << endl;
+	fout << s.numberworkshop << endl;
+	fout << s.numberworkshopinoperation << endl;
+	fout << s.efficiency << endl;
+}
+
+
 
 void Correction()
 {
@@ -174,24 +191,26 @@ int main()
 		switch (number)
 		{
 		case 1:
-			pipe = Createpipe();
+			pipe = CreatePipe();
 			break;
 		case 2:
 			cs = CreateCS();
 			break;
 		case 3:
-			Outputpipe(pipe);
-			OutputCS(cs);
+			OutputPipe(pipe);
 			break;
 		case 4:
-			Editpipestate(pipe);
+			OutputCS(cs);
 			break;
 		case 5:
-			Changingworkshopsinoperation(cs);
+			EditPipeState(pipe);
+			break;
+		case 6:
+			ChangingWorkshopsInOperation(cs);
 			break;
 		}
 
-	} while (number != 8);
+	} while (number != 9);
 	{
 		return 0;
 	}
