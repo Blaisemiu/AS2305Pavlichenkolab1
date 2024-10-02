@@ -66,10 +66,10 @@ void OutputPipe(Pipe p)
 
 void EditPipeState(Pipe& p)
 {
-	p.state = !p.state;
-	cout << "Pipe state changed" << endl
-		<< "New pipe state: " << (p.state ? "Under repair" : "In progress");
-	cout << "\n";
+		p.state = !p.state;
+		cout << "Pipe state changed" << endl
+			<< "New pipe state: " << (p.state ? "Under repair" : "In progress");
+		cout << "\n";
 }
 
 CS CreateCS()
@@ -111,47 +111,47 @@ void OutputCS(CS s)
 
 void ChangingWorkshopsInOperation(CS& s)
 {
-	cout << "Number of workshop in operation: " << s.numberworkshop << endl;
-	cout << "Do you want to start or stop the workshop? (1 - start, 0 - stop): ";
-	bool choice;
-	int numberofchages;
-	while (!(cin >> choice))
-	{
-		Correction();
-	}
-	if (choice == 1)
-	{
-		cout << "Write how many workshops to start: ";
-		while (!(cin >> numberofchages) || (s.numberworkshopinoperation + numberofchages) > s.numberworkshop || numberofchages < 0)
+		cout << "Number of workshop in operation: " << s.numberworkshop << endl;
+		cout << "Do you want to start or stop the workshop? (1 - start, 0 - stop): ";
+		bool choice;
+		int numberofchages;
+		while (!(cin >> choice))
 		{
 			Correction();
 		}
-		s.numberworkshopinoperation += numberofchages;
-	}
-	else
-	{
-		cout << "Write how many workshops to stop: ";
-		while (!(cin >> numberofchages) || (s.numberworkshopinoperation - numberofchages) < 0 || numberofchages < 0)
+		if (choice == 1)
 		{
-			Correction();
+			cout << "Write how many workshops to start: ";
+			while (!(cin >> numberofchages) || (s.numberworkshopinoperation + numberofchages) > s.numberworkshop || numberofchages < 0)
+			{
+				Correction();
+			}
+			s.numberworkshopinoperation += numberofchages;
 		}
-		s.numberworkshopinoperation -= numberofchages;
-	}
+		else
+		{
+			cout << "Write how many workshops to stop: ";
+			while (!(cin >> numberofchages) || (s.numberworkshopinoperation - numberofchages) < 0 || numberofchages < 0)
+			{
+				Correction();
+			}
+			s.numberworkshopinoperation -= numberofchages;
+		}
 
-	cout << "Number of workshop in operation: " << s.numberworkshopinoperation << endl;
+		cout << "Number of workshop in operation: " << s.numberworkshopinoperation << endl;
+
 }
 
 void Menu()
 {
 	cout << "1.Add pipe\n"
 		<< "2.Add compressor station\n"
-		<< "3.Viev pipe\n"
-		<< "4.Viev compressor stetion\n"
-		<< "5.Edit pipe state\n"
-		<< "6.Edit the number of working workshops\n"
-		<< "7.Save data to file\n"
-		<< "8.Load data from file\n"
-		<< "9.Exit\n"
+		<< "3.View all objects\n"
+		<< "4.Edit pipe state\n"
+		<< "5.Edit the number of working workshops\n"
+		<< "6.Save data to file\n"
+		<< "7.Load data from file\n"
+		<< "8.Exit\n"
 		<< "Enter menu number: ";
 }
 
@@ -190,7 +190,7 @@ void LoadDataPipe(ifstream& fin, Pipe& p)
 	getline(fin, label);
 	if (label == "Pipe")
 	{
-		fin >> p.name;
+		getline(fin,p.name);
 		fin >> p.length;
 		fin >> p.diameter;
 		fin >> p.state;
@@ -209,7 +209,7 @@ void LoadDataCS(ifstream& fin, CS& s)
 	getline(fin, label);
 	if (label == "CS")
 	{
-		fin >> s.csname;
+		getline(fin, s.csname);
 		fin >> s.numberworkshop;
 		fin >> s.numberworkshopinoperation;
 		fin >> s.efficiency;
@@ -230,14 +230,19 @@ void Correction()
 int main()
 {
 	int number;
-	Pipe pipe = { "None", 0, 0, 0};
-	CS cs = { "None", 0, 0, 0};
-	
+	Pipe pipe = { "None", 0, 0, 0 };
+	CS cs = { "None", 0, 0, 0 };
 
-	do
+
+	while (1)
 	{
 		Menu();
-		cin >> number;
+		while (!(cin >> number))
+		{
+			Correction();
+			continue;
+		}
+
 		switch (number)
 		{
 		case 1:
@@ -251,20 +256,24 @@ int main()
 				cout << "The pipe was not created" << endl;
 			else
 				OutputPipe(pipe);
-			break;
-		case 4:
 			if (cs.numberworkshop == 0)
 				cout << "The compressor station was not created" << endl;
 			else
 				OutputCS(cs);
 			break;
+		case 4:
+			if (pipe.length == 0)
+				cout << "The pipe was not created" << endl;
+			else
+				EditPipeState(pipe);
+			break;
 		case 5:
-			EditPipeState(pipe);
+			if (cs.numberworkshop == 0)
+				cout << "The compressor station was not created" << endl;
+			else
+				ChangingWorkshopsInOperation(cs);
 			break;
 		case 6:
-			ChangingWorkshopsInOperation(cs);
-			break;
-		case 7:
 		{
 			ofstream fout;
 			fout.open("data.txt", ios::out);
@@ -279,7 +288,7 @@ int main()
 				cout << "Error! Failed to write data to file" << endl;
 			break;
 		}
-		case 8:
+		case 7:
 		{
 			ifstream fin;
 			fin.open("data.txt", ios::in);
@@ -292,10 +301,14 @@ int main()
 			else
 				cout << "Error! Failed to load data from file" << endl;
 		}
+		case 8:
+			return 0;
+		default:
+		{
+			cout << "no action" << endl;
+			break;
 		}
-
-	} while (number != 9);
-	{
-		return 0;
+		}
 	}
+	return 0;
 }
