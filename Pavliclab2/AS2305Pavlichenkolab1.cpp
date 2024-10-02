@@ -183,9 +183,8 @@ void SaveDataCS(ofstream& fout, const CS& s)
 	}
 }
 
-Pipe LoadDataPipe(ifstream& fin, Pipe& p)
+void LoadDataPipe(ifstream& fin, Pipe& p)
 {	
-	Pipe pnone;
 	string label;
 	fin >> ws;
 	getline(fin, label);
@@ -198,15 +197,13 @@ Pipe LoadDataPipe(ifstream& fin, Pipe& p)
 	}
 	else
 	{
-		pnone = {"None", 0, 0, 0 };
-		return pnone;
+		p = { "None", 0, 0, 0 };
 	}
 	
 }
 
-CS LoadDataCS(ifstream& fin, CS& s)
+void LoadDataCS(ifstream& fin, CS& s)
 {	
-	CS csnone;
 	string label;
 	fin >> ws;
 	getline(fin, label);
@@ -219,8 +216,7 @@ CS LoadDataCS(ifstream& fin, CS& s)
 	}
 	else
 	{
-		csnone = { "None", 0, 0, 0 };
-		return csnone;
+		s = { "None", 0, 0, 0 };
 	}
 }
 
@@ -251,10 +247,16 @@ int main()
 			cs = CreateCS();
 			break;
 		case 3:
-			OutputPipe(pipe);
+			if (pipe.length == 0)
+				cout << "The pipe was not created" << endl;
+			else
+				OutputPipe(pipe);
 			break;
 		case 4:
-			OutputCS(cs);
+			if (cs.numberworkshop == 0)
+				cout << "The compressor station was not created" << endl;
+			else
+				OutputCS(cs);
 			break;
 		case 5:
 			EditPipeState(pipe);
