@@ -171,7 +171,7 @@ void SaveDataPipe(ofstream& fout, const Pipe& p)
 
 void SaveDataCS(ofstream& fout, const CS& s)
 {	
-	if (s.numberworkshop < 0)
+	if (s.numberworkshop == 0)
 		fout << "*";
 	else
 	{
