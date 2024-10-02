@@ -80,7 +80,7 @@ CS CreateCS()
 	getline(cin, s.csname);
 
 	cout << "Write the number of workshops: ";
-	while (!(cin >> s.numberworkshop))
+	while (!(cin >> s.numberworkshop) || s.numberworkshop < 0)
 	{
 		Correction();
 	}
@@ -149,55 +149,79 @@ void Menu()
 		<< "4.Viev compressor stetion\n"
 		<< "5.Edit pipe state\n"
 		<< "6.Edit the number of working workshops\n"
-		<< "7.Save Pipe to file\n"
-		<< "8.Save Compressor station to file\n"
-		<< "9.Load Pipe from file\n"
-		<< "10.Load Comperssor station from file\n"
-		<< "11.Exit\n"
+		<< "7.Save data to file\n"
+		<< "8.Load data from file\n"
+		<< "9.Exit\n"
 		<< "Enter menu number: ";
 }
 
 void SaveDataPipe(ofstream& fout, const Pipe& p)
-{
-
-	fout << p.name << endl;
-	fout << p.length << endl;
-	fout << p.diameter << endl;
-	fout << p.state << endl;
-
+{	
+	if (p.length == 0)
+		fout << "*" << endl;
+	else
+	{
+		fout << "Pipe" << endl;
+		fout << p.name << endl;
+		fout << p.length << endl;
+		fout << p.diameter << endl;
+		fout << p.state << endl;
+	}
 }
 
 void SaveDataCS(ofstream& fout, const CS& s)
-{
-
-	fout << s.csname << endl;
-	fout << s.numberworkshop << endl;
-	fout << s.numberworkshopinoperation << endl;
-	fout << s.efficiency << endl;
-
-}
-
-void LoadDataPipe(ifstream& fin, Pipe& p)
 {	
-
-	fin >> p.name;
-	fin >> p.length;
-	fin >> p.diameter;
-	fin >> p.state;
-
-	fin.close();
+	if (s.numberworkshop < 0)
+		fout << "*";
+	else
+	{
+		fout << "CS" << endl;
+		fout << s.csname << endl;
+		fout << s.numberworkshop << endl;
+		fout << s.numberworkshopinoperation << endl;
+		fout << s.efficiency << endl;
+	}
 }
 
-void LoadDataCS(ifstream& fin,CS& s)
-{
+Pipe LoadDataPipe(ifstream& fin, Pipe& p)
+{	
+	Pipe pnone;
+	string label;
+	fin >> ws;
+	getline(fin, label);
+	if (label == "Pipe")
+	{
+		fin >> p.name;
+		fin >> p.length;
+		fin >> p.diameter;
+		fin >> p.state;
+	}
+	else
+	{
+		pnone = {"None", 0, 0, 0 };
+		return pnone;
+	}
+	
+}
 
-
-	fin >> s.csname;
-	fin >> s.numberworkshop;
-	fin >> s.numberworkshopinoperation;
-	fin >> s.efficiency;
-
-
+CS LoadDataCS(ifstream& fin, CS& s)
+{	
+	CS csnone;
+	string label;
+	fin >> ws;
+	getline(fin, label);
+	if (label == "CS")
+	{
+		fin >> s.csname;
+		fin >> s.numberworkshop;
+		fin >> s.numberworkshopinoperation;
+		fin >> s.efficiency;
+	}
+	else
+	{
+		csnone = { "None", 0, 0, 0 };
+		return csnone;
+	}
 }
 
 void Correction()
@@ -240,31 +264,35 @@ int main()
 			break;
 		case 7:
 		{
-			ofstream fout("data.txt");
+			ofstream fout;
+			fout.open("data.txt", ios::out);
 			if (fout.is_open())
 			{
 				SaveDataPipe(fout, pipe);
+				SaveDataCS(fout, cs);
 				fout.close();
-				cout << "Pipe data saved to file" << endl;
+				cout << "Data saved to file" << endl;
 			}
 			else
 				cout << "Error! Failed to write data to file" << endl;
+			break;
 		}
 		case 8:
 		{
-			ofstream fout("data.txt");
-			if (fout.is_open())
+			ifstream fin;
+			fin.open("data.txt", ios::in);
+			if (fin.is_open())
 			{
-				SaveDataCS(fout, cs);
-				fout.close();
-				cout << "Compressor station data saved to file" << endl;
+				LoadDataPipe(fin, pipe);
+				LoadDataCS(fin, cs);
+				cout << "Data load from file" << endl;
 			}
 			else
-				cout << "Error! Failed to write data to file" << endl;
+				cout << "Error! Failed to load data from file" << endl;
 		}
 		}
 
-	} while (number != 11);
+	} while (number != 9);
 	{
 		return 0;
 	}
