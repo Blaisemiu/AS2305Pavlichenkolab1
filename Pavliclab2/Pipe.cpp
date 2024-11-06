@@ -9,10 +9,10 @@ void Pipe::EditPipeState() {
 
 ostream& operator << (ostream& out, const Pipe& p)
 {
-	out << "Pipe's name: " << p.name << endl;
-	out << "Pipe's length: " << p.length << endl;
-	out << "Pipe's diameter: " << p.diameter << endl;
-	out << "Pipe's state: " << (p.state ? "Under repair" : "In progress") << endl;
+	out << "Pipe's name: " << p.name << endl 
+		<< "Pipe's length: " << p.length << endl
+		<< "Pipe's diameter: " << p.diameter << endl
+		<< "Pipe's state: " << (p.state ? "Under repair" : "In progress") << endl;
 	return out;
 
 
