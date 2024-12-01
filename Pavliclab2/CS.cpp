@@ -3,6 +3,8 @@
 #include <string>
 using namespace std;
 
+int CS::CSMaxId = 1;
+
 ostream& operator << (ostream& out, const CS& s)
 {
 	out << "Compressor Station's name: " << s.csname << endl 
@@ -13,7 +15,8 @@ ostream& operator << (ostream& out, const CS& s)
 }
 
 istream& operator >> (istream& in, CS& s)
-{
+{	
+	s.id = s.CSMaxId++;
 	cout << "Write the name of the compressor station: ";
 	cin >> ws;
 	getline(in, s.csname);
@@ -29,4 +32,29 @@ istream& operator >> (istream& in, CS& s)
 	cout << "\n";
 
 	return in;
+}
+std::ofstream& operator<<(std::ofstream& fout, const CS& s)
+{
+	if (s.csname != "None")
+	{
+		fout << s.csname << endl
+			<< s.numberworkshop << endl
+			<< s.numberworkshopinoperation << endl
+			<< s.efficiency << endl;
+	}
+	return fout;
+}
+std::ifstream& operator>>(std::ifstream& fin, CS& s)
+{
+	fin >> ws;
+	getline(fin, s.csname);
+	fin >> s.numberworkshop;
+	fin >> s.numberworkshopinoperation;
+	fin >> s.efficiency;
+	return fin;
 };
+
+int CS::GetCSID()
+{
+	return id;
+}
