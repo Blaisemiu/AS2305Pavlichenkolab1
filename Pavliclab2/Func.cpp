@@ -56,9 +56,9 @@ void ViewCSes(const unordered_map<int, CS>& cses)
 
 void DeletePipe(unordered_map<int, Pipe>& pipes)
 {
-	int id;
+	Pipe pipe;
 	cout << "Enter the number of pipe to delete: ";
-	cin >> id;
+	int id = GetCorrectNumber(1, pipe.GetMaxId());
 
 	if (pipes.find(id) != pipes.end())
 	{
@@ -72,10 +72,10 @@ void DeletePipe(unordered_map<int, Pipe>& pipes)
 }
 
 void DeleteCS(unordered_map<int, CS>& cses)
-{
-	int id;
+{	
+	CS cs;
 	cout << "Enter the number of cs to delete: ";
-	cin >> id;
+	int id = GetCorrectNumber(1, cs.GetMaxId());
 
 	if (cses.find(id) != cses.end())
 	{
@@ -97,8 +97,9 @@ void SavePipe(ofstream& fout, unordered_map<int, Pipe>& pipes)
 	}
 }
 
-void SaveCS(ofstream& fout, unordered_map<int, CS>& cses)
+void SaveCS(ofstream& fout,unordered_map<int, CS>& cses)
 {
+	ofstream fout;
 	for (const auto& [id, cs] : cses)
 	{
 		fout << id << endl;
@@ -106,11 +107,12 @@ void SaveCS(ofstream& fout, unordered_map<int, CS>& cses)
 	}
 }
 
-void SaveAll(ofstream& fout, unordered_map<int, Pipe>& pipes, unordered_map<int, CS>& cses)
+void SaveAll(unordered_map<int, Pipe>& pipes, unordered_map<int, CS>& cses)
 {
+	ofstream fout;
 	cout << "Please, enter the name of the file: ";
 	string filename;
-	cin >> filename;
+	INPUT_LINE(cin,filename);
 	fout.open(filename);
 	if (fout.is_open())
 	{
@@ -128,7 +130,8 @@ void SaveAll(ofstream& fout, unordered_map<int, Pipe>& pipes, unordered_map<int,
 }
 
 void LoadPipe(ifstream& fin, unordered_map<int, Pipe>& pipes, int NumPipe)
-{
+{	
+
 	for (int i = 0; i < NumPipe; i++)
 	{
 		int id;
@@ -140,8 +143,9 @@ void LoadPipe(ifstream& fin, unordered_map<int, Pipe>& pipes, int NumPipe)
 	}
 }
 
-void LoadCS(ifstream& fin, unordered_map<int, CS>& cses, int NumCS)
+void LoadCS(ifstream& fin,unordered_map<int, CS>& cses, int NumCS)
 {
+
 	for (int i = 0; i < NumCS; i++)
 	{
 		int id;
@@ -153,13 +157,14 @@ void LoadCS(ifstream& fin, unordered_map<int, CS>& cses, int NumCS)
 	}
 }
 
-void LoadAll(ifstream& fin, unordered_map<int, Pipe>& pipes, unordered_map<int, CS>& cses)
+void LoadAll(unordered_map<int, Pipe>& pipes, unordered_map<int, CS>& cses)
 {
+	ifstream fin;
 	int NumPipe = 0;
 	int NumCS = 0;
 	cout << "Please, enter the name of the file: ";
 	string filename;
-	cin >> filename;
+	INPUT_LINE(cin, filename);
 	fin.open(filename);
 	if (fin.is_open())
 	{

@@ -18,8 +18,7 @@ istream& operator >> (istream& in, CS& s)
 {	
 	s.id = s.CSMaxId++;
 	cout << "Write the name of the compressor station: ";
-	cin >> ws;
-	getline(in, s.csname);
+	INPUT_LINE(in, s.csname);
 
 	cout << "Write the number of workshops: ";
 	s.numberworkshop = GetCorrectNumber(1, 100000);

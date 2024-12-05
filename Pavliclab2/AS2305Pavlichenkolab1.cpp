@@ -10,8 +10,10 @@
 #include <unordered_set>
 #include "utils.h"
 #include "Func.h"
+#include <chrono>
+#include <format>
 
-
+//using namespace chrono;
 using namespace std;
 
 
@@ -55,30 +57,20 @@ void MenuChoice()
 
 int main()
 {
-	int idp;
-	int idc;
-	int number;
-	string name;
-	bool state;
-	int workshops;
-	int choice;
-	Pipe pipe;
-	CS cs;
+	redirect_output_wrapper cerr_out(cerr);
+	string time = format("{:%d_%m_%Y %H_%M_%OS}", chrono::system_clock::now());
+	ofstream logfile("log_" + time);
+	if (logfile)
+		cerr_out.redirect(logfile);
+
 	unordered_map < int, Pipe> pipes;
 	unordered_map <int, CS> cses;
 	unordered_set<int> filtres;
-	ofstream fout;
-	ifstream fin;
-	
 
 	while (1)
 	{
 		Menu();
-		while (!(cin >> number))
-		{
-			//Correction();
-			continue;
-		}
+		int number = GetCorrectNumber(1, 11);
 
 		switch (number)
 		{
@@ -89,12 +81,16 @@ int main()
 			AddCS(cses);
 			break;
 		case 3:
+		{
 			ViewPipes(pipes);
 			ViewCSes(cses);
 			break;
+		}
 		case 4:
+		{
+			Pipe pipe;
 			cout << "Enter pipe number to edit state: ";
-			cin >> idp;
+			int idp = GetCorrectNumber(1, pipe.GetMaxId());
 			if (pipes.find(idp) != pipes.end())
 			{
 				pipes.at(idp).EditPipeState();
@@ -105,9 +101,12 @@ int main()
 				cout << "Pipe with number " << idp << " not found" << endl;
 			}
 			break;
+		}
 		case 5:
+		{
+			CS cs;
 			cout << "Enter compressor station ID to edit workshops in operation: ";
-			cin >> idc;
+			int idc = GetCorrectNumber(1, cs.GetMaxId());
 
 			if (cses.find(idc) != cses.end())
 			{
@@ -118,14 +117,17 @@ int main()
 				cout << "Compressor station with ID " << idc << " not found." << endl;
 			}
 			break;
+		}
 		case 6:
 		{
-			SaveAll(fout, pipes, cses);
+		
+			SaveAll(pipes, cses);
 			break;
 		}
 		case 7:
-		{
-			LoadAll(fin, pipes, cses);
+		{	
+			
+			LoadAll(pipes, cses);
 			break;
 		}
 		case 8:
@@ -151,6 +153,8 @@ int main()
 					}
 					else
 					{
+						string name;
+						int choice;
 						cout << "Enter the name for filter: ";
 						INPUT_LINE(cin, name);
 						filtres = PipeFind(pipes, CheckPipeName, name);
@@ -174,11 +178,12 @@ int main()
 					}
 					else
 					{
+						
 						cout << "Enter the state for filter: ";
-						state = GetCorrectNumber(0, 1);
+						bool state = GetCorrectNumber(0, 1);
 						filtres = PipeFind(pipes, CheckPipeState, state);
 						MenuChoice();
-						choice = GetCorrectNumber(1, 2);
+						int choice = GetCorrectNumber(1, 2);
 						if (choice == 1)
 						{
 							ChangePipeId(pipes, filtres);
@@ -197,11 +202,12 @@ int main()
 					}
 					else
 					{
+						string name;
 						cout << "Enter the name for filter: ";
 						INPUT_LINE(cin, name);
 						filtres = CSFind(cses, CheckCSName, name);
 						MenuChoice();
-						choice = GetCorrectNumber(1, 2);
+						int choice = GetCorrectNumber(1, 2);
 						if (choice == 1)
 						{
 							ChangeCSId(cses, filtres);
@@ -220,11 +226,11 @@ int main()
 					}
 					else
 					{
-						cout << "Enter the name for filter: ";
-						cin >> workshops;
+						cout << "Enter the workshops for filter: ";
+						int workshops = GetCorrectNumber(1, 10000000);
 						filtres = CSFind(cses, CheckCSWorkshop, workshops);
 						MenuChoice();
-						choice = GetCorrectNumber(1, 2);
+						int choice = GetCorrectNumber(1, 2);
 						if (choice == 1)
 						{
 							ChangeCSId(cses, filtres);

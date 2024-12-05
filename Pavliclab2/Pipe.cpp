@@ -26,8 +26,7 @@ istream& operator >> (istream& in, Pipe& p)
 {
 	p.id = p.MaxId++;
 	cout << "Write the name of the pipe: ";
-	cin >> ws;
-	getline(in, p.name);
+	INPUT_LINE(in, p.name);
 	cout << "Write the length of the pipe: ";
 	p.length = GetCorrectNumber(1, 100000);
 

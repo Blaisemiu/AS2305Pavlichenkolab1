@@ -15,12 +15,14 @@ private:
 	bool state = false;
 
 public:
+
 	void EditPipeState();
 	int GetPipeID();
 	std::string GetName() const { return name; }
     int GetLength() const { return length; }
     int GetDiameter() const { return diameter; }
     bool GetState() const { return state; }
+	int GetMaxId() const { return MaxId; }
 
 
 	friend std::ostream& operator << (std::ostream& out, const Pipe& p);
