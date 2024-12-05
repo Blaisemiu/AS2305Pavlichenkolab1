@@ -14,9 +14,12 @@ private:
 	int numberworkshopinoperation = 0;
 	int efficiency = 0;
 public:
-	//void ChangingWorkshopsInOperation();
+	void ChangeWorkshopsInOperation();
 	int GetCSID();
-
+	std::string GetCSName() const { return csname; }
+	int GetNumberWorkshops() const { return numberworkshop; }
+	int GetWorkshopsInOperation() const { return numberworkshopinoperation; }
+	double GetEfficiency() const { return efficiency; }
 
 	friend std::ostream& operator << (std::ostream& out, const CS& s);
 	friend std::istream& operator >> (std::istream& in, CS& s);

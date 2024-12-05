@@ -25,7 +25,7 @@ istream& operator >> (istream& in, CS& s)
 	s.numberworkshop = GetCorrectNumber(1, 100000);
 
 	cout << "Write the number of workshops in operation: ";
-	s.numberworkshopinoperation = GetCorrectNumber(1, 100000);
+	s.numberworkshopinoperation = GetCorrectNumber(1, s.numberworkshop);
 
 	cout << "Write the efficiency of the station (from 0 to 1000): ";
 	s.efficiency = GetCorrectNumber(0, 1000);
@@ -57,4 +57,28 @@ std::ifstream& operator>>(std::ifstream& fin, CS& s)
 int CS::GetCSID()
 {
 	return id;
+}
+
+void CS::ChangeWorkshopsInOperation()
+{
+	cout << "Number workshops in operation: " << numberworkshopinoperation << " / " << numberworkshop << endl;
+
+	cout << "Do you want to (1 - increase, 0 - decrease): ";
+	bool increase = GetCorrectNumber(0, 1);
+	int change = 0;
+
+	if (increase)
+	{
+		cout << "Enter number of workshops to start: ";
+		change = GetCorrectNumber(1, numberworkshop - numberworkshopinoperation);
+		numberworkshopinoperation += change;
+		cout << "New number of workshops in operation: " << numberworkshopinoperation << endl;
+	}
+	else
+	{
+		cout << "Enter number of workshops to stop: ";
+		change = GetCorrectNumber(1, numberworkshopinoperation);
+		numberworkshopinoperation -= change;
+		cout << "New number of workshops in operation: " << numberworkshopinoperation << endl;
+	}
 }

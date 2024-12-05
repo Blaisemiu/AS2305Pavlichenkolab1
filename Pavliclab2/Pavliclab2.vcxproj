@@ -131,10 +131,13 @@
   <ItemGroup>
     <ClCompile Include="AS2305Pavlichenkolab1.cpp" />
     <ClCompile Include="CS.cpp" />
+    <ClCompile Include="Func.cpp" />
     <ClCompile Include="Pipe.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CS.h" />
+    <ClInclude Include="Func.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

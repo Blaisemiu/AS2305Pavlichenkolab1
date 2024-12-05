@@ -1,0 +1,32 @@
+4
+2
+1
+nord pipe
+23
+41
+1
+2
+nord stream pipe
+34
+12
+1
+3
+high pipe
+41
+23
+0
+4
+black pipe
+55
+22
+1
+1
+blue cs
+345
+2
+123
+2
+white cs
+33
+23
+124

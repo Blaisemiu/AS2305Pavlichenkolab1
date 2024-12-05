@@ -29,10 +29,10 @@ istream& operator >> (istream& in, Pipe& p)
 	cin >> ws;
 	getline(in, p.name);
 	cout << "Write the length of the pipe: ";
-	p.length = GetCorrectNumber(5, 100000);
+	p.length = GetCorrectNumber(1, 100000);
 
 	cout << "Write the diameter of the pipe: ";
-	p.diameter = GetCorrectNumber(5, 100000);
+	p.diameter = GetCorrectNumber(1, 100000);
 
 	cout << "Is the pipe being repaired? (Yes - 1, No - 0): ";
 	p.state = GetCorrectNumber(0, 1);
@@ -45,8 +45,7 @@ ofstream& operator << (ofstream& fout, const Pipe& p)
 {
 	if (p.name != "None")
 	{
-		fout << "Pipe" << endl
-			<< p.name << endl
+		fout << p.name << endl
 			<< p.length << endl
 			<< p.diameter << endl
 			<< p.state << endl;
