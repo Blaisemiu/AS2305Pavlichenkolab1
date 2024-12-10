@@ -7,7 +7,8 @@ int CS::CSMaxId = 1;
 
 ostream& operator << (ostream& out, const CS& s)
 {
-	out << "Compressor Station's name: " << s.csname << endl 
+	out << "Number of compressor station: " << s.id << endl
+		<< "Compressor Station's name: " << s.csname << endl 
 		<< "Number of workshop : " << s.numberworkshop << endl 
 		<< "Number of workshop in operation: " << s.numberworkshopinoperation << endl 
 		<< "The effeciency of the station: " << s.efficiency << endl;
@@ -36,7 +37,8 @@ std::ofstream& operator<<(std::ofstream& fout, const CS& s)
 {
 	if (s.csname != "None")
 	{
-		fout << s.csname << endl
+		fout << s.id << endl
+			<< s.csname << endl
 			<< s.numberworkshop << endl
 			<< s.numberworkshopinoperation << endl
 			<< s.efficiency << endl;
@@ -45,6 +47,7 @@ std::ofstream& operator<<(std::ofstream& fout, const CS& s)
 }
 std::ifstream& operator>>(std::ifstream& fin, CS& s)
 {
+	fin >> s.id;
 	fin >> ws;
 	getline(fin, s.csname);
 	fin >> s.numberworkshop;

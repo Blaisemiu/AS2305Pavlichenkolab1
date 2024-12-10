@@ -13,7 +13,8 @@ void Pipe::EditPipeState() {
 
 ostream& operator << (ostream& out, const Pipe& p)
 {
-	out << "Pipe's name: " << p.name << endl
+	out << "Pipe's number: " << p.id << endl
+		<< "Pipe's name: " << p.name << endl
 		<< "Pipe's length: " << p.length << endl
 		<< "Pipe's diameter: " << p.diameter << endl
 		<< "Pipe's state: " << (p.state ? "Under repair" : "In progress") << endl;
@@ -44,7 +45,8 @@ ofstream& operator << (ofstream& fout, const Pipe& p)
 {
 	if (p.name != "None")
 	{
-		fout << p.name << endl
+		fout << p.id << endl 
+			<< p.name << endl
 			<< p.length << endl
 			<< p.diameter << endl
 			<< p.state << endl;
@@ -53,6 +55,7 @@ ofstream& operator << (ofstream& fout, const Pipe& p)
 }
 std::ifstream& operator>>(std::ifstream& fin, Pipe& p)
 {
+	fin >> p.id;
 	fin >> ws;
 	getline(fin, p.name);
 	fin >> p.length;

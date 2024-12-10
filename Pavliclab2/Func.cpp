@@ -92,17 +92,15 @@ void SavePipe(ofstream& fout, unordered_map<int, Pipe>& pipes)
 {
 	for (const auto& [id, pipe] : pipes)
 	{
-		fout << id << endl;
 		fout << pipe;
 	}
 }
 
 void SaveCS(ofstream& fout,unordered_map<int, CS>& cses)
 {
-	ofstream fout;
+
 	for (const auto& [id, cs] : cses)
 	{
-		fout << id << endl;
 		fout << cs;
 	}
 }
@@ -134,12 +132,10 @@ void LoadPipe(ifstream& fin, unordered_map<int, Pipe>& pipes, int NumPipe)
 
 	for (int i = 0; i < NumPipe; i++)
 	{
-		int id;
-		fin >> id;
 
 		Pipe pipe;
 		fin >> pipe;
-		pipes.emplace(id, pipe);
+		pipes.emplace(pipe.GetPipeID(), pipe);
 	}
 }
 
@@ -148,12 +144,10 @@ void LoadCS(ifstream& fin,unordered_map<int, CS>& cses, int NumCS)
 
 	for (int i = 0; i < NumCS; i++)
 	{
-		int id;
-		fin >> id;
 
 		CS cs;
 		fin >> cs;
-		cses.emplace(id, cs);
+		cses.emplace(cs.GetCSID(), cs);
 	}
 }
 
