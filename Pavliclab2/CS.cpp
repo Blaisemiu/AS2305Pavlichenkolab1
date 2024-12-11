@@ -53,6 +53,12 @@ std::ifstream& operator>>(std::ifstream& fin, CS& s)
 	fin >> s.numberworkshop;
 	fin >> s.numberworkshopinoperation;
 	fin >> s.efficiency;
+
+	if (s.id >= CS::CSMaxId) {
+		CS::CSMaxId = s.id + 1;
+	}
+
+
 	return fin;
 };
 
@@ -71,16 +77,24 @@ void CS::ChangeWorkshopsInOperation()
 
 	if (increase)
 	{
-		cout << "Enter number of workshops to start: ";
-		change = GetCorrectNumber(1, numberworkshop - numberworkshopinoperation);
-		numberworkshopinoperation += change;
-		cout << "New number of workshops in operation: " << numberworkshopinoperation << endl;
+		if (numberworkshopinoperation < numberworkshop) {
+			numberworkshopinoperation++;
+			cout << "One workshop started. New number of workshops in operation: "
+				<< numberworkshopinoperation << endl;
+		}
+		else {
+			cout << "All workshops are already in operation." << endl;
+		}
 	}
 	else
 	{
-		cout << "Enter number of workshops to stop: ";
-		change = GetCorrectNumber(1, numberworkshopinoperation);
-		numberworkshopinoperation -= change;
-		cout << "New number of workshops in operation: " << numberworkshopinoperation << endl;
+		if (numberworkshopinoperation > 0) {
+			numberworkshopinoperation--;
+			cout << "One workshop stopped. New number of workshops in operation: "
+				<< numberworkshopinoperation << endl;
+		}
+		else {
+			cout << "No workshops are currently in operation to stop." << endl;
+		}
 	}
 }

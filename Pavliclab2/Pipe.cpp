@@ -62,6 +62,11 @@ std::ifstream& operator>>(std::ifstream& fin, Pipe& p)
 	fin >> p.diameter;
 	fin >> p.state;
 
+	if (p.id >= Pipe::MaxId) {
+		Pipe::MaxId = p.id + 1;
+	}
+	
+
 	return fin;
 }
 

@@ -25,6 +25,7 @@ bool CheckCSWorkshop(const CS& s, int param)
 
 void ChangePipeId(std::unordered_map<int, Pipe>& pipes, const std::unordered_set<int>& PipeRes)
 {
+	Pipe p;
 	cout << "Do you want edit all or select number? (1 - all, 2 - select): ";
 	int choice = GetCorrectNumber(1, 2);
 	if (choice == 1)
@@ -39,13 +40,19 @@ void ChangePipeId(std::unordered_map<int, Pipe>& pipes, const std::unordered_set
 	{
 		cout << "Enter the numbers of objects to change (separated by a space): ";
 		unordered_set<int> ids;
-		int id;
 
-		while (cin >> id)
+		while (true)
 		{
+			int id = GetCorrectNumber(1, p.GetMaxId() + 1);
 			ids.emplace(id);
-			if (cin.peek() == '\n') break;
+			if (cin.peek() == '\n')
+			{
+				cin.ignore();
+				break;
+			}
 		}
+
+
 		for (int id : PipeRes)
 		{
 			if (ids.count(id) > 0)
@@ -53,12 +60,17 @@ void ChangePipeId(std::unordered_map<int, Pipe>& pipes, const std::unordered_set
 				pipes.at(id).EditPipeState();
 				cout << "Object number " << id << " succesfully changes\n";
 			}
+			else
+			{
+				cout << "Object number " << id << " not found in the results.\n";
+			}
 		}
 	}
 }
 
 void ChangeCSId(std::unordered_map<int, CS>& cses, const std::unordered_set<int>& CSRes)
 {
+	CS s;
 	cout << "Do you want edit all or select number? (1 - all, 2 - select): ";
 	int choice = GetCorrectNumber(1, 2);
 	if (choice == 1)
@@ -73,13 +85,19 @@ void ChangeCSId(std::unordered_map<int, CS>& cses, const std::unordered_set<int>
 	{
 		cout << "Enter the numbers of objects to change (separated by a space): ";
 		unordered_set<int> ids;
-		int id;
 
-		while (cin >> id)
+
+		while (true)
 		{
+			int id = GetCorrectNumber(1, s.GetMaxId() + 1);
 			ids.emplace(id);
-			if (cin.peek() == '\n') break;
+			if (cin.peek() == '\n')
+			{
+				cin.ignore();
+				break;
+			}
 		}
+
 
 		for (int id : CSRes)
 		{
@@ -88,12 +106,17 @@ void ChangeCSId(std::unordered_map<int, CS>& cses, const std::unordered_set<int>
 				cses.at(id).ChangeWorkshopsInOperation();
 				cout << "Object number " << id << " succesfully changes\n";
 			}
+			else 
+			{
+				cout << "Object number " << id << " not found in the results.\n";
+			}
 		}
 	}
 }
 
 void DeletePipeId(std::unordered_map<int, Pipe>& pipes, const std::unordered_set<int>& PipeRes)
 {
+	Pipe p;
 	cout << "Do you want delete all or select number? (1 - all, 2 - select): ";
 	int choice = GetCorrectNumber(1, 2);
 	if (choice == 1)
@@ -108,13 +131,18 @@ void DeletePipeId(std::unordered_map<int, Pipe>& pipes, const std::unordered_set
 	{
 		cout << "Enter the numbers of objects to delete (separated by a space): ";
 		unordered_set<int> ids;
-		int id;
 
-		while (cin >> id)
+		while (true)
 		{
+			int id = GetCorrectNumber(1, p.GetMaxId() + 1);
 			ids.emplace(id);
-			if (cin.peek() == '\n') break;
+			if (cin.peek() == '\n')
+			{
+				cin.ignore();
+				break;
+			}
 		}
+		
 		for (int id : PipeRes)
 		{
 			if (ids.count(id) > 0)
@@ -128,6 +156,7 @@ void DeletePipeId(std::unordered_map<int, Pipe>& pipes, const std::unordered_set
 
 void DeleteCSId(std::unordered_map<int, CS>& cses, const std::unordered_set<int>& CSRes)
 {
+	CS s;
 	cout << "Do you want delete all or select number? (1 - all, 2 - select): ";
 	int choice = GetCorrectNumber(1, 2);
 	if (choice == 1)
@@ -142,13 +171,18 @@ void DeleteCSId(std::unordered_map<int, CS>& cses, const std::unordered_set<int>
 	{
 		cout << "Enter the numbers of objects to delete (separated by a space): ";
 		unordered_set<int> ids;
-		int id;
 
-		while (cin >> id)
+		while (true)
 		{
+			int id = GetCorrectNumber(1, s.GetMaxId() + 1);
 			ids.emplace(id);
-			if (cin.peek() == '\n') break;
+			if (cin.peek() == '\n')
+			{
+				cin.ignore();
+				break;
+			}
 		}
+
 		for (int id : CSRes)
 		{
 			if (ids.count(id) > 0)
